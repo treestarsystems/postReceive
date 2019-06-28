@@ -2,7 +2,6 @@ server/dbs/*.db
 /trash
 *.swp
 *.save
-*.json
 node_modules
 /server/public
 hardcopy.0
