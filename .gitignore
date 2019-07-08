@@ -1,5 +1,6 @@
 server/dbs/*.db
 /trash
+/message_storage
 *.swp
 *.save
 node_modules
