@@ -20,31 +20,11 @@ const rl = readline.createInterface({
 });
 
 function readStdIn () {
+	var writeStream = fs.createWriteStream(prMessage.prFullFilePath);
 	rl.on('line', (line) => {
-		writeFile (line + '\r\n');
+		writeStream.write(line + '\r\n', {encoding:'utf8', mode: "770", flag: 'a'}, () => { writeStream.end(); });
 	});
-}
-
-/*
-function readStdIn () {
-	fs.readFile('/dev/stdin', 'utf8', (err, data) => {
-		if (err) throw err;
-		writeFile (data);
-	});
-}
-*/
-
-function writeFile (input) {
-	fs.writeFileSync(prMessage.prFullFilePath, input, {encoding:'utf8', mode: "770", flag: 'a'}, (err) => {
-		if (err) throw err;
-		fs.readFileSync(prMessage.prFullFilePath, 'utf8', (err, data) => {
-			if (err) throw err;
-		});
-	});
-}
-
-async function submitMessage () {
-	await readStdIn ();
+	writeStream.on('finish', () => {
 	axios.post('http://localhost:5000/api/message', prMessage)
 		.then(function (response) {
 	      		console.log(response.data);
@@ -52,9 +32,10 @@ async function submitMessage () {
 	        .catch(function (error) {
 	              console.log(error);
 	        });
+	});
 }
 
-submitMessage();
+readStdIn ();
 
 //console.log(JSON.stringify(prMessage));
 /*
