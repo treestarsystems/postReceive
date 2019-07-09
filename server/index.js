@@ -1,5 +1,4 @@
 const express = require('express');
-
 const app = express();
 
 const message = require('./routes/api/message');
