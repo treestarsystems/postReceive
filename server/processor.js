@@ -13,7 +13,7 @@ var prServer = 'localhost';
 var prServerPort = 5000;
 var prEndpoint = 'api/message';
 
-var messageStoreDir = path.join(__dirname, '../message_storage');
+var messageStoreDir = path.join(__dirname, '../message_storage/message');
 var prMessage = {};
 prMessage.timestamp = Date.now();
 prMessage.prId = core.genRegular(20);
