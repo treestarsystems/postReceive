@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const loadCollection = require('../../prmodules/prModules').loadCollection;
+const core = require('../../prmodules/prModules');
 const simpleParser = require('mailparser').simpleParser;
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -9,19 +9,29 @@ const fs = require('fs');
 router.get('/', async (req, res) => {
   console.log(req);
 //  let parsed = await simpleParser(req);
-//  res.status(200).send('DONE');
+  res.status(200).send('DONE');
 });
 
 //Add Single Message
 router.use(bodyParser.json());
 router.post('/', async (req, res) => {
-	processMessage (req.body.prFullFilePath);
+	processMessage (req.body);
 	res.status(200).send('DONE');
 });
 
-function processMessage (filePath) {
+
+//Write attachment data to file.
+function convertAttachment (content,path) {
+	var writeStream = fs.createWriteStream(path);
+	writeStream.write(content, {flag: 'w'}, () => { writeStream.end(); });
+	writeStream.on('finish', () => {
+		core.changePerm(path);
+	});
+}
+
+function processMessage (prObject) {
 	prProcessedrMessage = {};
-	fs.readFile(filePath, async (err, data) => {
+	fs.readFile(prObject.prFullFilePath, async (err, data) => {
 		if (err) throw err;
 		let parsed = await simpleParser(data);
 		prProcessedrMessage.fullMessage = data.toString();
@@ -59,6 +69,7 @@ function processMessage (filePath) {
 		prAttachmentCount = 0;
 		prProcessedrMessage.attachments = {};
 		parsed.attachments.forEach(function(attachment) {
+			attachmentPath = `${core.coreVars.attachmentStoreDir}\/message-${prObject.timestamp}-${prObject.prId}-${attachment.filename}`
 			prProcessedrMessage.attachments["attachment"+prAttachmentCount] = {
 				"filename":attachment.filename,
 				"contentType":attachment.contentType,
@@ -66,16 +77,17 @@ function processMessage (filePath) {
 				"checksum":attachment.checksum,
 				"size":attachment.size,
 				"encoding":attachment.headers.get('content-transfer-encoding'),
-				"content":attachment.content,
+				"content":attachmentPath,
 				"contentId":attachment.contentId,
 				"cid":attachment.cid,
 				"related":attachment.related
 			}
+			convertAttachment (attachment.content,attachmentPath);
 			prAttachmentCount++;
 		});
 //		prProcessedrMessage.attachments = parsed.attachments;
 		console.log(prProcessedrMessage);
-		fs.unlink(filePath, function (err) {
+		fs.unlink(prObject.prFullFilePath, function (err) {
 			if (err) throw err;
 			// if no error, file has been deleted successfully
 			console.log('\nFile deleted!');

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-fs=require('fs');
+const fs = require('fs');
 const path = require('path');
 const core = require(path.join(__dirname, 'prmodules/prModules.js'));
 const simpleParser = require('mailparser').simpleParser;
@@ -13,12 +13,11 @@ var prServer = 'localhost';
 var prServerPort = 5000;
 var prEndpoint = 'api/message';
 
-var messageStoreDir = path.join(__dirname, '../message_storage/message');
 var prMessage = {};
 prMessage.timestamp = Date.now();
 prMessage.prId = core.genRegular(20);
 prMessage.filename = `message-${prMessage.timestamp}-${prMessage.prId}.eml`;
-prMessage.prFullFilePath = `${messageStoreDir}\/${prMessage.filename}`;
+prMessage.prFullFilePath = `${core.coreVars.messageStoreDir}\/${prMessage.filename}`;
 
 function readStdIn () {
 	const rl = readline.createInterface({

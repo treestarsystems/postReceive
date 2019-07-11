@@ -1,9 +1,15 @@
 const mongodb = require('mongodb');
 const os = require('os');
 const fs = require('fs');
+const path = require('path');
 
 //Variables
-var userInfo = os.userInfo();
+var coreVars = {
+	"userInfo": os.userInfo(),
+	"storeDir": path.join(__dirname, '../../message_storage'),
+	"messageStoreDir": path.join(__dirname, '../../message_storage/messages'),
+	"attachmentStoreDir": path.join(__dirname, '../../message_storage/attachments')
+}
 
 //Functions
 //Generate a random alphanumeric string
@@ -32,10 +38,14 @@ async function loadCollection(server,dbName,collectionName) {
   return client.db(dbName).collection(collectionName);
 }
 
+function changePerm (path) {
+        fs.chownSync(path,coreVars.userInfo.uid,coreVars.userInfo.gid);
+        fs.chmodSync(path, 0o770);
+}
+
 function createDir (path) {
         fs.mkdirSync(path);
-        fs.chownSync(path,userInfo.uid,userInfo.gid);
-        fs.chmodSync(path, 0o770);
+	changePerm (path);
         console.log(`Dir Created: ${path}`);
 }
 
@@ -44,5 +54,6 @@ module.exports = {
 	getRandomNumber,
 	loadCollection,
 	createDir,
-	userInfo
+	changePerm,
+	coreVars
 }
