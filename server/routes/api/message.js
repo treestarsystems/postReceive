@@ -23,7 +23,12 @@ router.post('/', async (req, res) => {
 //Write attachment data to file.
 function convertAttachment (content,path) {
 	var writeStream = fs.createWriteStream(path);
-	writeStream.write(content, {flag: 'w'}, () => { writeStream.end(); });
+	writeStream.write(content, {flag: 'w'}, (err) => {
+		if(err) throw err;
+		//My theory is that this works here becomes the file is not recieved in chunks
+		//like it is when sent over the network.
+		writeStream.end();
+	});
 	writeStream.on('finish', () => {
 		core.changePerm(path);
 	});
@@ -34,7 +39,7 @@ function processMessage (prObject) {
 	fs.readFile(prObject.prFullFilePath, async (err, data) => {
 		if (err) throw err;
 		let parsed = await simpleParser(data);
-		prProcessedrMessage.fullMessage = data.toString();
+//		prProcessedrMessage.fullMessage = data.toString();
 		if (parsed.headers.has('subject')) {
 			prProcessedrMessage.subject = parsed.headers.get('subject');
 		}
@@ -85,7 +90,6 @@ function processMessage (prObject) {
 			convertAttachment (attachment.content,attachmentPath);
 			prAttachmentCount++;
 		});
-//		prProcessedrMessage.attachments = parsed.attachments;
 		console.log(prProcessedrMessage);
 		fs.unlink(prObject.prFullFilePath, function (err) {
 			if (err) throw err;
