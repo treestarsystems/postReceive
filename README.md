@@ -1,2 +1,14 @@
 # postReceive
-eMail to API instead of Inbox. Seems like a fun project.
+eMail to API transport project using 
+- Nodemailer's [simpleParser](https://nodemailer.com/extras/mailparser/) for email body parsing. 
+
+Seems like a fun project.
+
+## Planned Features 
+- [Tesseract.js](https://github.com/naptha/tesseract.js) OCR Engine for character recognition in images/PDFs/fax formats.
+- Document parsing for full text searches of major document types (docx|odf/xlsx|ods/pptx/odfp/etc). 
+ 
+## Documentation and Install instructions:
+Docs: https://treestarsystems.atlassian.net/wiki/spaces/PRD/overview
+Diagrams: 
+Install: https://treestarsystems.atlassian.net/wiki/spaces/PRD/pages/6291592/Install
