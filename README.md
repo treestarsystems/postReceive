@@ -9,6 +9,6 @@ Seems like a fun project.
 - Document parsing for full text searches of major document types (docx|odf/xlsx|ods/pptx/odfp/etc). 
  
 ## Documentation and Install instructions:
-Docs: https://treestarsystems.atlassian.net/wiki/spaces/PRD/overview
-Diagrams: 
-Install: https://treestarsystems.atlassian.net/wiki/spaces/PRD/pages/6291592/Install
+- Docs: https://treestarsystems.atlassian.net/wiki/spaces/PRD/overview
+- Diagrams: 
+- Install: https://treestarsystems.atlassian.net/wiki/spaces/PRD/pages/6291592/Install
