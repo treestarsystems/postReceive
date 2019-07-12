@@ -39,12 +39,18 @@ async function loadCollection(server,dbName,collectionName) {
 }
 
 function changePerm (path) {
-        fs.chownSync(path,coreVars.userInfo.uid,coreVars.userInfo.gid);
-        fs.chmodSync(path, 0o770);
+        fs.chown(path,coreVars.userInfo.uid,coreVars.userInfo.gid, (err) => {
+		if(err) throw err;
+	});
+        fs.chmod(path, 0o770, (err) => {
+		if(err) throw err;
+	});
 }
 
 function createDir (path) {
-        fs.mkdirSync(path);
+        fs.mkdir(path, (err) => {
+		if(err) throw err;
+	});
 	changePerm (path);
         console.log(`Dir Created: ${path}`);
 }
