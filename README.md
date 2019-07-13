@@ -12,3 +12,5 @@ Seems like a fun project.
 - Docs: https://treestarsystems.atlassian.net/wiki/spaces/PRD/overview
 - Diagrams: https://treestarsystems.atlassian.net/wiki/spaces/PRD/pages/7831556/Diagrams
 - Install: https://treestarsystems.atlassian.net/wiki/spaces/PRD/pages/6291592/Install
+
+![alt text](mail-flow.svg)

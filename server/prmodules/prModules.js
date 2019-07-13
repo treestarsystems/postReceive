@@ -16,13 +16,14 @@ var coreVars = {
 }
 
 //Functions
-//Generate a random alphanumeric string
+//Get numeric id for the www-data user
 function getUserInfo() {
 	uid = parseInt(childProcess.execSync('id -u www-data').toString().replace(/\n$/, ''));
 	gid = parseInt(childProcess.execSync('id -g www-data').toString().replace(/\n$/, ''));
         return {"uid": uid,"gid": gid};
 }
 
+//Generate a random alphanumeric string
 function genRegular(x) {
         var regularchar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         var text = "";
