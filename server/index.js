@@ -4,6 +4,11 @@ const path = require('path');
 const app = express();
 const core = require(path.join(__dirname, 'prmodules/prModules.js'));
 
+//Ensure the correct permissions are applied to the scripts
+core.changePerm(core.coreVars.installedDir);
+core.changePerm(core.coreVars.processorScript);
+core.changePerm(core.coreVars.emailViaTelnetScript);
+
 //Create Storage Directories if they do not exist. These should be mounted to a large storage pool for all the attachments.
 if (!fs.existsSync(core.coreVars.storeDir)){
 	core.createDir (core.coreVars.storeDir);

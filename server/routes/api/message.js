@@ -74,10 +74,11 @@ function processMessage (prObject) {
 		prAttachmentCount = 0;
 		prProcessedrMessage.attachments = {};
 		parsed.attachments.forEach(function(attachment) {
-			attachmentPath = `${core.coreVars.attachmentStoreDir}\/message-${prObject.timestamp}-${prObject.prId}-${(attachment.filename).replace(/ /g,"_")}`
+			attachmentName = (attachment.filename).replace(/ /g,"_").toLowerCase();
+			attachmentPath = `${core.coreVars.attachmentStoreDir}\/message-${prObject.timestamp}-${prObject.prId}-${attachmentName}`
 			prProcessedrMessage.attachments["attachment-"+prAttachmentCount] = {
 				"processingStatusCode":0,
-				"filename":(attachment.filename).replace(/ /g,"_"),
+				"filename":attachmentName,
 				"contentType":attachment.contentType,
 				"contentDisposition":attachment.contentDisposition,
 				"checksum":attachment.checksum,
