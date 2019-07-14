@@ -30,7 +30,8 @@
     "express": "^4.17.1",
     "mailparser": "^2.7.1",
     "minimist": "^1.2.0",
-    "mongodb": "^3.2.6"
+    "mongodb": "^3.2.6",
+    "node-tesseract": "^0.2.7"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
