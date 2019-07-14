@@ -32,7 +32,8 @@
     "minimist": "^1.2.0",
     "mongodb": "^3.2.6",
     "node-tesseract": "^0.2.7",
-    "pdf-to-text": "0.0.7"
+    "pdf-to-text": "0.0.7",
+    "lodash": ">=4.17.13"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
