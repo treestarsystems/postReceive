@@ -1,16 +1,15 @@
 # postReceive
 eMail to API transport project using 
-- Nodemailer's [simpleParser](https://nodemailer.com/extras/mailparser/) for email body parsing. 
-
+- Nodemailer's [simpleParser](https://nodemailer.com/extras/mailparser/){:target="_blank"} for email body parsing. 
 Seems like a fun project.
 
 ## Planned Features 
-- [Tesseract.js](https://github.com/naptha/tesseract.js) OCR Engine for character recognition in images/PDFs/fax formats.
+- [Tesseract.js](https://github.com/naptha/tesseract.js){:target="_blank"} OCR Engine for character recognition in images/PDFs/fax formats.
 - Document parsing for full text searches of major document types (docx|odf/xlsx|ods/pptx/odfp/etc). 
  
 ## Documentation and Install instructions:
-- Docs: https://treestarsystems.atlassian.net/wiki/spaces/PRD/overview
-- Diagrams: https://treestarsystems.atlassian.net/wiki/spaces/PRD/pages/7831556/Diagrams
-- Install: https://treestarsystems.atlassian.net/wiki/spaces/PRD/pages/6291592/Install
-- Video(es): https://www.youtube.com/watch?v=_G_wdv-HTbI&list=PLFwrukKhzwLhIFpN1qufsp4UqORl_lDpp
-![alt text](mail-flow.svg)
+- [Documentation](https://treestarsystems.atlassian.net/wiki/spaces/PRD/overview){:target="_blank"}
+- [Diagrams](https://treestarsystems.atlassian.net/wiki/spaces/PRD/pages/7831556/Diagrams){:target="_blank"}
+- [Install Instructions](https://treestarsystems.atlassian.net/wiki/spaces/PRD/pages/6291592/Install){:target="_blank"}
+- [Video Playlist](https://www.youtube.com/watch?v=_G_wdv-HTbI&list=PLFwrukKhzwLhIFpN1qufsp4UqORl_lDpp){:target="_blank"}
+![mail flow diagram](mail-flow.svg)
