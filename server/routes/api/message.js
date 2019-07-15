@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
 
 
 //Write attachment data to file.
-function convertAttachment (content,path) {
+function extractAttachment (content,path) {
 	var writeStream = fs.createWriteStream(path);
 	writeStream.write(content, {flag: 'w'}, (err) => {
 		if(err) throw err;
@@ -35,48 +35,48 @@ function convertAttachment (content,path) {
 }
 
 function processMessage (prObject) {
-	prProcessedrMessage = {};
+	prProcessedMessage = {};
 	fs.readFile(prObject.prFullFilePath, async (err, data) => {
 		if (err) throw err;
 		let parsed = await simpleParser(data);
-//		prProcessedrMessage.fullMessage = data.toString();
+//		prProcessedMessage.fullMessage = data.toString();
 		if (parsed.headers.has('subject')) {
-			prProcessedrMessage.subject = parsed.headers.get('subject');
+			prProcessedMessage.subject = parsed.headers.get('subject');
 		}
 		if (parsed.headers.has('from')) {
-			prProcessedrMessage.from = parsed.headers.get('from').value;
+			prProcessedMessage.from = parsed.headers.get('from').value;
 		}
 		if (parsed.headers.has('to')) {
-			prProcessedrMessage.to = parsed.headers.get('to').value;
+			prProcessedMessage.to = parsed.headers.get('to').value;
 		}
 		if (parsed.headers.has('cc')) {
-			prProcessedrMessage.cc = parsed.headers.get('cc').value;
+			prProcessedMessage.cc = parsed.headers.get('cc').value;
 		}
 		if (parsed.date) {
 			//[DATE-ISO,DATE-HUMAN,DATE-EPOCH/MILLISECOND]
-			prProcessedrMessage.timestamps = [parsed.date,Date(parsed.date),new Date(parsed.date).getTime()];
+			prProcessedMessage.timestamps = [parsed.date,Date(parsed.date),new Date(parsed.date).getTime()];
 		}
 		if (parsed.messageId) {
-			prProcessedrMessage.messageid = parsed.messageId;
+			prProcessedMessage.messageid = parsed.messageId;
 		}
 		if (parsed.headers.has('inReplyTo')) {
-			prProcessedrMessage.inreplyto = parsed.inReplyTo;
+			prProcessedMessage.inreplyto = parsed.inReplyTo;
 		}
 		if (parsed.headers.has('reply-to')) {
-			prProcessedrMessage.replyto = parsed.headers.get('reply-to').value;
+			prProcessedMessage.replyto = parsed.headers.get('reply-to').value;
 		}
 		if (parsed.references) {
-			prProcessedrMessage.references = parsed.references;
+			prProcessedMessage.references = parsed.references;
 		}
-		prProcessedrMessage.html = parsed.html;
-		prProcessedrMessage.text = parsed.text;
-		prProcessedrMessage.textashtml = parsed.textAsHtml;
+		prProcessedMessage.html = parsed.html;
+		prProcessedMessage.text = parsed.text;
+		prProcessedMessage.textashtml = parsed.textAsHtml;
 		prAttachmentCount = 0;
-		prProcessedrMessage.attachments = {};
+		prProcessedMessage.attachments = {};
 		parsed.attachments.forEach(function(attachment) {
 			attachmentName = (attachment.filename).replace(/ /g,"_").toLowerCase();
 			attachmentPath = `${core.coreVars.attachmentStoreDir}\/message-${prObject.timestamp}-${prObject.prId}-${attachmentName}`
-			prProcessedrMessage.attachments["attachment-"+prAttachmentCount] = {
+			prProcessedMessage.attachments["attachment-"+prAttachmentCount] = {
 				"processingStatusCode":0,
 				"filename":attachmentName,
 				"contentType":attachment.contentType,
@@ -89,10 +89,10 @@ function processMessage (prObject) {
 				"cid":attachment.cid,
 				"related":attachment.related
 			}
-			convertAttachment (attachment.content,attachmentPath);
+			extractAttachment (attachment.content,attachmentPath);
 			prAttachmentCount++;
 		});
-		console.log(prProcessedrMessage);
+		console.log(prProcessedMessage);
 		fs.unlink(prObject.prFullFilePath, function (err) {
 			if (err) throw err;
 			// if no error, file has been deleted successfully
