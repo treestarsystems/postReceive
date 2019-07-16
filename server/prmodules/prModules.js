@@ -3,6 +3,7 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const childProcess = require('child_process')
+const emoji = require('node-emoji');
 
 //Variables
 var coreVars = {
@@ -66,11 +67,25 @@ function createDir (path) {
         console.log(`Dir Created: ${path}`);
 }
 
+//Used to check if the app is started as the correct user (www-data) due to permissions requirements.
+function incorrectUser (user,host,port) {
+	if (process.env.USER != 'www-data') {
+		console.log(`\nCurrent User: ${emoji.emojify(`:x::scream: ${user} :scream::x:`)}`);
+		console.log('This process must be ran as the www-data user or else permission errors will impede functionality.\n');
+		process.exit(0);
+	} else {
+		var startMessage = console.log(`\nServer started by ${user} on ${host}:${port} in ${process.env.NODE_ENV} mode`);
+		//Sets a new process environment variable that the app will use to run the start script.
+		process.env['CORRECT_USER'] = true;
+	}
+}
+
 module.exports = {
 	genRegular,
 	getRandomNumber,
 	loadCollection,
 	createDir,
 	changePerm,
+	incorrectUser,
 	coreVars
 }

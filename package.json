@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js"
+    "start": "NODE_ENV=prod PORT=5000 HOST=localhost node server/index.js",
+    "dev": "NODE_ENV=dev PORT=5001 HOST=localhost nodemon server/index.js"
   },
   "author": "Michael Bogle <info@treestarsystems.com>",
   "license": "MIT",
@@ -28,12 +28,13 @@
     "axios": "^0.19.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "lodash": ">=4.17.13",
     "mailparser": "^2.7.1",
     "minimist": "^1.2.0",
     "mongodb": "^3.2.6",
+    "node-emoji": "^1.10.0",
     "node-tesseract": "^0.2.7",
-    "pdf-to-text": "0.0.7",
-    "lodash": ">=4.17.13"
+    "pdf-to-text": "0.0.7"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"

@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 const core = require(path.join(__dirname, 'prmodules/prModules.js'));
+const emoji = require('node-emoji');
 
 //Ensure the correct permissions are applied to the scripts
 core.changePerm(core.coreVars.installedDir);
@@ -26,4 +27,11 @@ const attachment = require('./routes/api/attachment');
 app.use('/api/message', message);
 app.use('/api/attachment', attachment);
 
-app.listen(5000, '127.0.0.1', () => console.log(`\nServer started by ${core.coreVars.userInfo.username} on localhost:5000...\nThis process must be ran as the www-data user or else permission errors will impede functionality.\n`));
+//Check if app is run in dev or prod mode.
+core.incorrectUser(process.env.USER,process.env.HOST,process.env.PORT);
+
+if (process.env.CORRECT_USER) {
+	app.listen(process.env.PORT, process.env.HOST, () => {
+		console.log(`${emoji.emojify(':heavy_check_mark:.....:100:')}`)
+	});
+}
