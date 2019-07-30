@@ -92,7 +92,11 @@ function processMessage (prObject) {
 			extractAttachment (attachment.content,attachmentPath);
 			prAttachmentCount++;
 		});
-		console.log(prProcessedMessage);
+		const prSubmissionMessage = await core.loadCollection(core.coreVars.dbServer,core.coreVars.dbName,core.coreVars.dbMessageCollection)
+		await prSubmissionMessage.insertOne(
+			prProcessedMessage
+		);
+//		console.log(prProcessedMessage);
 		fs.unlink(prObject.prFullFilePath, function (err) {
 			if (err) throw err;
 			// if no error, file has been deleted successfully

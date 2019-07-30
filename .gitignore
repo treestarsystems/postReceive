@@ -1,5 +1,7 @@
 server/dbs/*.db
 /trash
+/db_storage
+/log_storage
 /message_storage
 *.swp
 *.save

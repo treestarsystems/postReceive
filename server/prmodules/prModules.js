@@ -2,7 +2,7 @@ const mongodb = require('mongodb');
 const os = require('os');
 const fs = require('fs');
 const path = require('path');
-const childProcess = require('child_process')
+const childProcess = require('child_process');
 const emoji = require('node-emoji');
 
 //Variables
@@ -12,8 +12,15 @@ var coreVars = {
 	"storeDir": path.join(__dirname, '../../message_storage'),
 	"messageStoreDir": path.join(__dirname, '../../message_storage/messages'),
 	"attachmentStoreDir": path.join(__dirname, '../../message_storage/attachments'),
+	"dbStoreDir": path.join(__dirname, '../../db_storage'),
+	"logStoreDir": path.join(__dirname, '../../log_storage'),
 	"processorScript": path.join(__dirname, '../processor.js'),
-	"emailViaTelnetScript": path.join(__dirname, '../../test_scripts/email-via-telnet.sh')
+	"emailViaTelnetScript": path.join(__dirname, '../../test_scripts/email-via-telnet.sh'),
+	"dbServer": "localhost",
+	"dbName": "postReceive",
+	"dbMessageCollection": "messageData",
+	"dbAttachmentCollection": "attachmentData",
+	"instanceId": path.join(__dirname, '../../log_storage/pid/postReceiveInstance.id')
 }
 
 //Functions
