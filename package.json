@@ -33,7 +33,7 @@
     "express": "^4.17.1",
     "lodash": ">=4.17.13",
     "mailparser": "^2.7.1",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.6",
     "mongodb": "^3.2.6",
     "node-emoji": "^1.10.0",
     "node-tesseract": "^0.2.7",
